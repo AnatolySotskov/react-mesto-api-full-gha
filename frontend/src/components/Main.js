@@ -21,7 +21,7 @@ function Main({
           <img
             className="profile__avatar"
             src={currentUser.avatar}
-            alt="Жак Кусто"
+            alt="Аватар"
           />
         </div>
         <div className="profile__profile-info">

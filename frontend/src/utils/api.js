@@ -5,8 +5,10 @@ class Api {
     this._token = apiSettings.token;
     this._address = apiSettings.address;
     this._headers = {
-      authorization: this._token,
-      "Content-Type": "application/json",
+      // authorization: this._token,
+      // "Content-Type": "application/json",
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
     };
   }
 
@@ -41,8 +43,8 @@ class Api {
   patchAvatar(avatar) {
     return fetch(`${this._address}/users/me/avatar`, {
       method: "PATCH",
-      body: JSON.stringify({ avatar }),
       headers: this._headers,
+      body: JSON.stringify({avatar}),
     }).then(this._handleResponse);
   }
 

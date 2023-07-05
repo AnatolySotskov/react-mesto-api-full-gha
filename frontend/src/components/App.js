@@ -45,29 +45,40 @@ function App() {
     setIsInfoTooltipOpen(false);
   };
 
-  function getUserData() {
-    api
-      .getInfoUser()
-      .then((userData) => setCurrentUser(userData))
-      .catch((err) => `Ошибка получения данных пользователя: ${err}`);
-  }
+  // function getUserData() {
+  //   api
+  //     .getInfoUser()
+  //     .then((userData) => setCurrentUser(userData))
+  //     .catch((err) => `Ошибка получения данных пользователя: ${err}`);
+  // }
 
-  function getCardsData() {
-    api
-      .getCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => console.log(err));
-  }
+  // function getCardsData() {
+  //   api
+  //     .getCards()
+  //     .then((data) => {
+  //       setCards(data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
+
+  // useEffect(() => {
+  //   getUserData();
+  //   getCardsData();
+  // }, []);
 
   useEffect(() => {
-    getUserData();
-    getCardsData();
-  }, []);
+    if (loggedIn) {
+      Promise.all([api.getInfoUser(), api.getCards()])
+        .then(([userData, data]) => {
+          setCurrentUser(userData);
+          setCards(data);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [loggedIn]);
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((id) => id === currentUser._id);
 
     api
       .toggleLike(card._id, isLiked)
@@ -166,8 +177,8 @@ function App() {
   }
 
   function onSignOut() {
+     localStorage.removeItem("token");
     setLoggedIn(false);
-    localStorage.removeItem("token");
     navigate("sign-in");
   }
 

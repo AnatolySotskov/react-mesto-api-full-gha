@@ -73,7 +73,7 @@ const dislikeCard = (req, res, next) => {
       if (!dataCard) {
         throw new NotFoundError('Карточка не найдена (Ошибка 404)');
       }
-      res.send({ data: dataCard });
+      res.send(dataCard);
     })
     .catch((err) => {
       next(err);
