@@ -141,8 +141,9 @@ function App() {
             navigate("/");
           }
         })
-        .catch(() => {
-          localStorage.removeItem("token");
+        .catch((error) => {
+          // localStorage.removeItem("token");
+          console.log(error);
         });
     }
   }, [loggedIn]);
@@ -171,9 +172,8 @@ function App() {
         setLoggedIn(true);
         localStorage.setItem("token", data.token);
         navigate("/");
-      },
-      (err) => console.log(`Ошибка авторизации: ${err}`)
-    );
+      },)
+     .catch((err) => console.log(`Ошибка авторизации: ${err}`));
   }
 
   function onSignOut() {

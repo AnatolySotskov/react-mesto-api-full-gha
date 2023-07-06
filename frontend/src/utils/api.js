@@ -4,13 +4,9 @@ class Api {
   constructor(apiSettings) {
     this._token = apiSettings.token;
     this._address = apiSettings.address;
-    this._headers = {
-      // authorization: this._token,
-      // "Content-Type": "application/json",
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    };
+    this._headers = apiSettings.headers;
   }
+
 
   _handleResponse = (res) => {
     if (res.ok) {
@@ -21,52 +17,80 @@ class Api {
   };
 
   getCards() {
+    const token = localStorage.getItem("token");
     return fetch(`${this._address}/cards`, {
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._handleResponse);
   }
 
   getInfoUser() {
+    const token = localStorage.getItem("token");
     return fetch(`${this._address}/users/me`, {
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._handleResponse);
   }
 
   patchProfile({ name, about }) {
+    const token = localStorage.getItem("token");
     return fetch(`${this._address}/users/me`, {
       method: "PATCH",
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({ name, about }),
     }).then(this._handleResponse);
   }
 
   patchAvatar(avatar) {
+    const token = localStorage.getItem("token");
     return fetch(`${this._address}/users/me/avatar`, {
       method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({avatar}),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ avatar }),
     }).then(this._handleResponse);
   }
 
   addCard({ name, link }) {
+    const token = localStorage.getItem("token");
     return fetch(`${this._address}/cards`, {
       method: "POST",
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({ name, link }),
     }).then(this._handleResponse);
   }
 
   _setLike(id) {
+    const token = localStorage.getItem("token");
     return fetch(`${this._address}/cards/${id}/likes`, {
       method: "PUT",
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._handleResponse);
   }
 
   _removeLike(id) {
+    const token = localStorage.getItem("token");
     return fetch(`${this._address}/cards/${id}/likes`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._handleResponse);
   }
 
@@ -79,13 +103,17 @@ class Api {
   }
 
   deleteCards(cardId) {
+    const token = localStorage.getItem("token");
     return fetch(`${this._address}/cards/${cardId}`, {
       method: "DELETE",
-      headers: this._headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     }).then(this._handleResponse);
   }
 }
 
 const api = new Api(apiSettings);
 
-export default api
+export default api;
