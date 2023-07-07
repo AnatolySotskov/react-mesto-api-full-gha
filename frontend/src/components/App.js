@@ -94,7 +94,7 @@ function App() {
     api
       .deleteCards(card._id)
       .then(() => {
-        setCards((state) => state.filter((item) => item._id !== card._id));
+        setCards((state) => state.filter((item) => item._id.toString() !== card._id.toString()));
         closeAllPopups();
       })
       .catch((err) => console.log(`Ошибка удаления: ${err}`));
