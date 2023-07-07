@@ -1,4 +1,4 @@
-export const BASE_URL = "http://anatolysotskov-bek.nomoreparties.sbs";
+export const BASE_URL = "https://anatolysotskov-bek.nomoreparties.sbs";
 
 const request = (url, options) => {
   const fetchAddress = `${BASE_URL}/${url}`;
