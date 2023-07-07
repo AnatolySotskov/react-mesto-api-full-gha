@@ -35,7 +35,7 @@ const deleteCard = (req, res, next) => {
       if (dataCard.owner.toString() !== userId) {
         throw new Forbidden('Нельзя удалить чужую карточку (Ошибка 403)');
       }
-      return card
+      card
         .findByIdAndRemove(cardId)
         .then(() => res.status(VERY_GOOD).send(card));
     })
