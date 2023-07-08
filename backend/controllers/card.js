@@ -37,7 +37,7 @@ const deleteCard = (req, res, next) => {
       }
       return card
         .findByIdAndRemove(cardId)
-        .then(() => res.status(VERY_GOOD).send(card));
+        .then(() => res.status(VERY_GOOD).send({ data: card }));
     })
     .catch((err) => {
       next(err);
